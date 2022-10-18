@@ -62,27 +62,28 @@ body {
   width: 100%;
   padding: 3rem;
 
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex; */
+  display: grid;
+  /* flex-wrap: wrap; */
   gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  justify-content: space-between;
 }
 
 .card {
   background-color: var(--DarkModeElements);
-  width: 17rem;
-  height: auto;
+  max-width: 22rem;
+  /* width: 17rem; */
+  /* height: auto; */
   border-radius: 0.6rem;
   overflow: hidden;
 }
 
-.card-image {
+img.card-image {
+  --height: 11rem; 
+  /* height: 160px; */
+  height: var(--height);
   width: 100%;
-  height: 160px;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 

@@ -15,12 +15,12 @@ function renderCard({
 }) {
   document.querySelector('.country-cards_container').innerHTML += `
   <div class="card">
-    <div class='card-image'>
-      <img
+    
+      <img class='card-image'
         src= ${svg}
         alt='${"The country's Flag"}'
       />
-    </div>
+   
     <div class="card-content">
       <h3 class="country-name">${common}</h3>
       <p>Population: 
@@ -39,12 +39,11 @@ function renderCard({
 
 //Filter Card on Search Function
 function filterCard() {
-  const temp = searchField.value
-  const searchFieldVal = temp.toLowerCase().trim();
+  const searchFieldVal = searchField.value.toLowerCase();
 
   // re-render allCountryData if no search term is passed
   // you can also use this for check ==> !/\S/.test(searchFieldVal)
-  if(searchFieldVal === ''){
+  if(!/\S/.test(searchFieldVal)){
     document.querySelector('.country-cards_container').innerHTML = ''
     return allCountryData.forEach(country => { renderCard(country) }
     )

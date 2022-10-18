@@ -1,6 +1,8 @@
 'use strict';
 
 const searchField = document.querySelector('.search');
+searchField.addEventListener('keyup', filterCard);
+
 let allCountryData = [];
 
 //Card Render Function
@@ -37,20 +39,45 @@ function renderCard({
 
 //Filter Card on Search Function
 function filterCard() {
-  const searchFieldVal = searchField.value;
+  const temp = searchField.value
+  const searchFieldVal = temp.toLowerCase().trim();
 
-  allCountryData.forEach(countryData => {
-    if (
-      countryData.name.common
-        .toLowerCase()
-        .includes(searchFieldVal.toLowerCase())
+  // re-render allCountryData if no search term is passed
+  // you can also use this for check ==> !/\S/.test(searchFieldVal)
+  if(searchFieldVal === ''){
+    document.querySelector('.country-cards_container').innerHTML = ''
+    return allCountryData.forEach(country => { renderCard(country) }
     )
-      renderCard(countryData);
-  });
+  }
+
+  const tempAllCountries = allCountryData.filter(countryData => {
+    return countryData.name.common.toLowerCase().includes(searchFieldVal) 
+    }
+  )
+
+  document.querySelector('.country-cards_container').innerHTML = ''
+  return tempAllCountries.forEach(countryData => { renderCard(countryData) }
+  )
 }
 
 //Fetching REST API and rendering the country cards
-fetch('https://restcountries.com/v3.1/all')
+// fetch('https://restcountries.com/v3.1/all')
+//   .then(response => response.json())
+//   .then(countries => {
+//     countries.forEach(country => {
+//       allCountryData.push(country);
+//       renderCard(country);
+//     });
+//   });
+
+//Search inputs needs the fully loaded data
+// window.addEventListener('load', function () {
+//   console.log(allCountryData);
+//   searchField.addEventListener('keyup', filterCard);
+// });
+
+window.addEventListener('DOMContentLoaded', function () {
+  fetch('https://restcountries.com/v3.1/all')
   .then(response => response.json())
   .then(countries => {
     countries.forEach(country => {
@@ -59,8 +86,6 @@ fetch('https://restcountries.com/v3.1/all')
     });
   });
 
-//Search inputs needs the fully loaded data
-window.addEventListener('load', function () {
+  // searchField.addEventListener('keyup', filterCard);
   console.log(allCountryData);
-  searchField.addEventListener('keyup', filterCard);
 });
